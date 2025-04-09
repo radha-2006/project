@@ -8,9 +8,9 @@ from langchain.vectorstores import Pinecone
 import pinecone
 import requests
 
-PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
-PINECONE_ENV = os.environ.get("PINECONE_ENV")
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+PINECONE_API_KEY = os.environ.get("pcsk_31ZNwt_CDXfjAmBCuvzVr8XHz8i3xx7FiYKAaJv7f3Zi4jE2mA6NtdzGvm3RCaerRrNMyZ")
+PINECONE_ENV = os.environ.get("us-east-1")
+GOOGLE_API_KEY = os.environ.get("AIzaSyCDlpu08UTyyo_ryNokL-U18q_iSl8NZWg")
 SERP_API_KEY = os.environ.get("SERP_API_KEY")
 
 llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=GOOGLE_API_KEY)
