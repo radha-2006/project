@@ -11,7 +11,7 @@ import requests
 PINECONE_API_KEY = os.environ.get("pcsk_31ZNwt_CDXfjAmBCuvzVr8XHz8i3xx7FiYKAaJv7f3Zi4jE2mA6NtdzGvm3RCaerRrNMyZ")
 PINECONE_ENV = os.environ.get("us-east-1")
 GOOGLE_API_KEY = os.environ.get("AIzaSyCDlpu08UTyyo_ryNokL-U18q_iSl8NZWg")
-SERP_API_KEY = os.environ.get("SERP_API_KEY")
+SCRAPINGBEE_API_KEY = os.environ.get("7KPIF2D5HQB0XXD38XDN2YNGIY2V1JJP9ZPYTQ8KZVVBN0OU43EJA1NY1ADNAVIZSH8YK060QYC37RR7")
 
 llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=GOOGLE_API_KEY)
 embedding_function = GoogleGenerativeAIEmbeddings(model_name="models/embedding-001", google_api_key=GOOGLE_API_KEY)
@@ -28,28 +28,25 @@ memory = ConversationBufferMemory(memory_key="chat_history", return_messages=Tru
 @tool
 def get_job_trends(query: str) -> str:
     try:
-        url = f"https://serpapi.com/search.json?q={query}&api_key={SERP_API_KEY}"
+        url = f"https://app.scrapingbee.com/api/v1/?api_key={SCRAPINGBEE_API_KEY}&url=https://www.google.com/search?q={query}"
         response = requests.get(url)
         response.raise_for_status()
-        data = response.json()
-        if 'organic_results' in data and data['organic_results']:
-            return str(data['organic_results'][:3])
-        else:
-            return "No job trends found."
+        # Parse the HTML response to extract relevant job trends
+        # This part requires more robust HTML parsing, using Beautiful Soup or similar
+        # For simplicity, we'll return the raw text for now.
+        return response.text  # You'll likely want to refine this
     except Exception as e:
         return f"Error retrieving job trends: {e}"
 
 @tool
 def get_salary_data(job_title: str, location: str) -> str:
     try:
-        url = f"https://serpapi.com/search.json?q={job_title}+salary+{location}&api_key={SERP_API_KEY}"
+        url = f"https://app.scrapingbee.com/api/v1/?api_key={SCRAPINGBEE_API_KEY}&url=https://www.google.com/search?q={job_title}+salary+{location}"
         response = requests.get(url)
         response.raise_for_status()
-        data = response.json()
-        if 'organic_results' in data and data['organic_results']:
-            return str(data['organic_results'][:3])
-        else:
-            return "Salary data not found."
+        # Parse the HTML response to extract salary data
+        # This part requires more robust HTML parsing.
+        return response.text #You will want to refine this.
     except Exception as e:
         return f"Error retrieving salary data: {e}"
 
